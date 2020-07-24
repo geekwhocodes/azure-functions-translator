@@ -1,6 +1,7 @@
 from transformers import T5Tokenizer, T5ForConditionalGeneration
 from time import time
 import os
+import logging
 
 models_dir_name = "models"
 # TODO: Refactor
@@ -9,14 +10,18 @@ az_file_share_mount_path = "/models"
 
 def get_model_path(function_directory):
     on_azure = os.getenv("WEBSITE_INSTANCE_ID")
+    logging.info(f"onzure - {on_azure}")
     model_name = os.getenv("CURRENT_MODEL")
+    logging.info(f"model name - {model_name")
     if function_directory and not on_azure:
         root_path = os.path.dirname(function_directory)
         module_path = os.path.join(root_path, models_dir_name, model_name)
+        logging.info(f"local dir model path {module_path}")
         return module_path
     else:
-        if os.getenv("WEBSITE_INSTANCE_ID"):
+        if on_azure:
             model_path = os.path.join(az_file_share_mount_path, model_name)
+            logging.info(f"on azure  - model path {model_path}")
             print(f"Computed model path - {model_path}")
             return model_path
         else:
