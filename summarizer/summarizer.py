@@ -34,7 +34,7 @@ def summarize(function_directory, text):
     start = time()
     tokenizer = T5Tokenizer.from_pretrained(model_path)
     model = T5ForConditionalGeneration.from_pretrained(model_path)
-     logging.info(f"Model loaded in {round(time()-start, 2)}s.")
+    logging.info(f"Model loaded in {round(time()-start, 2)}s.")
 
     logging.info("Tokenizing data...")
     input_text = tokenizer.encode(f"summarize: :{text}", return_tensors="pt")
