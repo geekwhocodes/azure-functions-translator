@@ -32,22 +32,22 @@ def get_model_path(function_directory):
 
 def translate_en_de(function_directory, text):
     model_path = get_model_path(function_directory)
-    print(f"Loading model from {model_path}")
+    logging.info(f"Loading model from {model_path}")
     start = time()
     tokenizer = T5Tokenizer.from_pretrained(model_path)
     model = T5ForConditionalGeneration.from_pretrained(model_path)
-    print(f"Model loaded in {round(time()-start, 2)}s.")
+    logging.info(f"Model loaded in {round(time()-start, 2)}s.")
 
-    print("Tokenizing data...")
+    logging.info("Tokenizing data...")
     input_text = tokenizer.encode(
         f"translate English to German:{text}", return_tensors="pt"
     )
     start = time()
     translated = model.generate(input_text)
-    print(f"Model executed in {round(time()-start, 2)}s.")
+    logging.info(f"Model executed in {round(time()-start, 2)}s.")
 
-    print("Generating result...")
+    logging.info("Generating result...")
     start = time()
     result = tokenizer.decode(translated[0], skip_special_tokens=True)
-    print(f"Result generated in {round(time()-start, 2)}s.")
+    logging.info(f"Result generated in {round(time()-start, 2)}s.")
     return result
