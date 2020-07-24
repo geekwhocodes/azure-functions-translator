@@ -16,8 +16,10 @@ def get_model_path(function_directory):
         module_path = os.path.join(root_path, models_dir_name, model_name)
         return module_path
     else:
-        if os.environ["WEBSITE_INSTANCE_ID"]:
-            return os.path.join(az_file_share_mount_path, model_name)
+        if os.getenv("WEBSITE_INSTANCE_ID"):
+            model_path = os.path.join(az_file_share_mount_path, model_name)
+            print(f"Computed model path - {model_path}")
+            return model_path
         else:
             ValueError("Models directory not found")
 
