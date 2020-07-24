@@ -12,7 +12,7 @@ def get_model_path(function_directory):
     on_azure = os.getenv("WEBSITE_INSTANCE_ID")
     logging.info(f"onzure - {on_azure}")
     model_name = os.getenv("CURRENT_MODEL")
-    logging.info(f"model name - {model_name")
+    logging.info(f"model name - {model_name}")
     if function_directory and not on_azure:
         root_path = os.path.dirname(function_directory)
         module_path = os.path.join(root_path, models_dir_name, model_name)
