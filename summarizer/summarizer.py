@@ -3,16 +3,31 @@ from time import time
 import os
 
 models_dir_name = "models"
-model_name = "t5-small"
+
+# TODO: Refactor
+az_file_share_mount_path = "/models"
+
+
+def get_model_path(function_directory):
+    on_azure = os.getenv("WEBSITE_INSTANCE_ID")
+    model_name = os.getenv("CURRENT_MODEL")
+    if function_directory and not on_azure:
+        root_path = os.path.dirname(function_directory)
+        module_path = os.path.join(root_path, models_dir_name, model_name)
+        return module_path
+    else:
+        if os.environ["WEBSITE_INSTANCE_ID"]:
+            return os.path.join(az_file_share_mount_path, model_name)
+        else:
+            ValueError("Models directory not found")
 
 
 def summarize(function_directory, text):
-    root_path = os.path.dirname(function_directory)
-    module_path = os.path.join(root_path, models_dir_name, model_name)
-    print(f"Loading model from {module_path}")
+    model_path = get_model_path(function_directory)
+    print(f"Loading model from {model_path}")
     start = time()
-    tokenizer = T5Tokenizer.from_pretrained(module_path)
-    model = T5ForConditionalGeneration.from_pretrained(module_path)
+    tokenizer = T5Tokenizer.from_pretrained(model_path)
+    model = T5ForConditionalGeneration.from_pretrained(model_path)
     print(f"Model loaded in {round(time()-start, 2)}s.")
 
     print("Tokenizing data...")
