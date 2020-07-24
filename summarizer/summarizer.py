@@ -6,11 +6,14 @@ models_dir_name = "models"
 
 # TODO: Refactor
 az_file_share_mount_path = "/models"
+# Temp var
+on_azure_key = "ON_AZURE"
 
 
 def get_model_path(function_directory):
-    on_azure = os.getenv("WEBSITE_INSTANCE_ID")
-    model_name = os.getenv("CURRENT_MODEL")
+    on_azure = os.getenv(on_azure_key)
+    logging.info(f"onzure - {on_azure}")
+    model_name = os.getenv("CURRENT_MODEL", "t5-small")
     if function_directory and not on_azure:
         root_path = os.path.dirname(function_directory)
         module_path = os.path.join(root_path, models_dir_name, model_name)
