@@ -1,0 +1,4 @@
+azure-functions
+https://download.pytorch.org/whl/cpu/torch-1.5.0%2Bcpu-cp36-cp36m-win_amd64.whl
+torchvision
+transformers
