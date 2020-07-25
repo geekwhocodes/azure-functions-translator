@@ -1,12 +1,12 @@
 #!/bin/pwsh
 
-$AZURE_STORAGE_ACCOUNT = "storageaccounthuggib054"
-$resource_group = "huggingface"
-$functionAppName = "gwc-hugging"
+$AZURE_STORAGE_ACCOUNT = "<<>>"
+$resource_group = "<<>>"
+$functionAppName = "<<>>"
 $shareName = "models"
 $directoryName = "models"
 $shareId = "gwc$(Get-Random -Count 1)"
-$mountPath = "/models"
+$mountPath = "/models" # DO not change
 
 #Write-Progress "Get Storage account key" "Inprogress"
 $AZURE_STORAGE_KEY = $(az storage account keys list -g $resource_group -n $AZURE_STORAGE_ACCOUNT --query '[0].value' -o tsv)
@@ -39,7 +39,7 @@ az webapp config storage-account add `
 #Write-Progress "Mount share to web app" "Complete"
 
 
-
+# This command upload files from directory to file share
 # az storage file upload-batch --account-key $AZURE_STORAGE_KEY `
 #   --account-name $AZURE_STORAGE_ACCOUNT --destination $directoryName `
 #   --source ./models
