@@ -2,7 +2,7 @@ import os
 import logging
 import json
 import azure.functions as func
-from .summarizer import summarize
+from ..shared.summarizer import summarize
 
 
 def main(req: func.HttpRequest, context: func.Context) -> func.HttpResponse:

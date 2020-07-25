@@ -2,7 +2,7 @@ import os
 import logging
 import json
 import azure.functions as func
-from .translate import translate_en_de
+from ..shared.translate import translate_en_de
 
 
 def main(req: func.HttpRequest, context: func.Context) -> func.HttpResponse:
